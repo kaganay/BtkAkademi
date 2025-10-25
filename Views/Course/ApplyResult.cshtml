@@ -1,0 +1,21 @@
+@model BtkAkademi.Models.Candidate
+
+<div class="container mt-5">
+    <h2 class="text-success text-center mb-4">Başvuru Başarılı!</h2>
+
+    <div class="card shadow p-4">
+        <h4 class="text-primary">Başvuru Bilgileri</h4>
+        <hr>
+        <p><strong>Ad Soyad:</strong> @Model.FirstName @Model.LastName</p>
+        <p><strong>Email:</strong> @Model.Email</p>
+        <p><strong>Yaş:</strong> @Model.Age</p>
+        <p><strong>Seçilen Kurs:</strong> @Model.Course</p>  @* Course yerine CourseName kullanıyorsan *@
+        
+        <div class="mt-3 d-flex gap-2">
+            <a asp-controller="Course" asp-action="Apply" class="btn btn-outline-primary">Yeni Başvuru Yap</a>
+            <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Ana Sayfaya Dön</a>
+            <a asp-controller="Course" asp-action="List" class="btn btn-success">Başvuru Listesini Gör</a>
+
+        </div>
+    </div>
+</div>

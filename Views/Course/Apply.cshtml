@@ -1,0 +1,62 @@
+@model Candidate
+
+<div class="container my-5">
+    <div class="card shadow-lg border-0 mx-auto" style="max-width: 700px;">
+        <div class="card-header text-center bg-gradient text-white" style="background: linear-gradient(90deg, #000428, #004e92);">
+            <h3 class="mb-0">Yeni Başvuru Formu</h3>
+        </div>
+
+        <div class="card-body p-4">
+            <form method="post" asp-controller="Course" asp-action="Apply" novalidate>
+
+                <div class="mb-3">
+                    <label for="Email" class="form-label fw-semibold">Email Adresiniz</label>
+                    <input type="email" id="Email" name="Email" class="form-control" placeholder="örnek@eposta.com" required />
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6 mb-3 mb-md-0">
+                        <label for="FirstName" class="form-label fw-semibold">Ad</label>
+                        <input type="text" id="FirstName" name="FirstName" class="form-control" placeholder="Adınızı girin" required />
+                    </div>
+                    <div class="col-md-6">
+                        <label for="LastName" class="form-label fw-semibold">Soyad</label>
+                        <input type="text" id="LastName" name="LastName" class="form-control" placeholder="Soyadınızı girin" required />
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="Age" class="form-label fw-semibold">Yaş</label>
+                    <select id="Age" name="Age" class="form-select" required>
+                        <option value="">Yaşınızı seçin</option>
+                        @for (int i = 18; i <= 40; i++)
+                        {
+                            <option value="@i">@i</option>
+                        }
+                    </select>
+                </div>
+
+                <fieldset class="mb-4">
+                    <legend class="fw-semibold">Katılmak İstediğiniz Kurs</legend>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" id="course1" name="Course" value="C#" required>
+                        <label class="form-check-label" for="course1">C#</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" id="course2" name="Course" value="Java">
+                        <label class="form-check-label" for="course2">Java</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" id="course3" name="Course" value="Python">
+                        <label class="form-check-label" for="course3">Python</label>
+                    </div>
+                </fieldset>
+
+                <div class="text-center">
+                    <a asp-controller="Home" asp-action="Index" class="btn btn-outline-secondary me-2 px-4">Ana Sayfa</a>
+                    <button type="submit" class="btn btn-primary px-4">Başvuruyu Gönder</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

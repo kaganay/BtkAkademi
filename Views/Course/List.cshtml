@@ -1,0 +1,90 @@
+@model IEnumerable<BtkAkademi.Models.Candidate>
+
+<div class="container my-5">
+    <div class="card shadow-lg border-0">
+        <div class="card-header bg-gradient text-white text-center" style="background: linear-gradient(90deg, #000428, #004e92);">
+            <h3 class="mb-0">Başvuru Listesi</h3>
+        </div>
+
+        <div class="card-body">
+            <!-- 🔍 Arama Alanı -->
+            <form asp-controller="Course" asp-action="List" method="get" class="mb-4 d-flex justify-content-center flex-wrap gap-2">
+                <input type="text" name="search" value="@Context.Request.Query["search"]" 
+                       placeholder="Ad, soyad veya e-posta ile arama yap..." 
+                       class="form-control w-50" />
+                <button type="submit" class="btn btn-success px-4">Ara</button>
+            </form>
+
+            <!-- 🔹 Bildirim Mesaj Alanı -->
+            @if (TempData["Message"] != null)
+            {
+                <div class="alert alert-info text-center mt-3">
+                    @TempData["Message"]
+                </div>
+            }
+
+            <!-- 🔹 Eğer kayıt yoksa -->
+            @if (!Model.Any())
+            {
+                <div class="alert alert-warning text-center">Henüz başvuru yapılmamış.</div>
+            }
+            else
+            {
+                <div class="table-responsive">
+                    <table class="table table-bordered align-middle text-center">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>ID</th>
+                                <th>Ad Soyad</th>
+                                <th>Email</th>
+                                <th>Yaş</th>
+                                <th>Kurs</th>
+                                <th>Başvuru Tarihi</th>
+                                <th>İşlemler</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.Id</td>
+                                    <td>@item.FirstName @item.LastName</td>
+                                    <td>@item.Email</td>
+                                    <td>@item.Age</td>
+                                    <td>@item.Course</td>
+                                    <td>@item.ApplyAt.ToString("dd.MM.yyyy HH:mm")</td>
+                                    <td>
+                                        <div class="d-flex justify-content-center flex-wrap gap-1">
+                                            <a asp-controller="Course" asp-action="Details" asp-route-id="@item.Id"
+                                               class="btn btn-info btn-sm">
+                                                <i class="bi bi-eye"></i> Detay
+                                            </a>
+
+                                            <a asp-controller="Course" asp-action="Edit" asp-route-id="@item.Id"
+                                               class="btn btn-warning btn-sm text-white">
+                                                <i class="bi bi-pencil"></i> Düzenle
+                                            </a>
+
+                                            <form asp-controller="Course" asp-action="Delete" method="post" style="display:inline;">
+                                                <input type="hidden" name="id" value="@item.Id" />
+                                                <button type="submit" class="btn btn-danger btn-sm"
+                                                        onclick="return confirm('Bu kaydı silmek istediğine emin misin?');">
+                                                    <i class="bi bi-trash"></i> Sil
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+
+            <div class="mt-4 text-center">
+                <a asp-controller="Course" asp-action="Apply" class="btn btn-primary me-2 px-4">Yeni Başvuru Ekle</a>
+                <a asp-controller="Home" asp-action="Index" class="btn btn-secondary px-4">Ana Sayfaya Dön</a>
+            </div>
+        </div>
+    </div>
+</div>
